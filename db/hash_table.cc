@@ -17,16 +17,13 @@ class HashTable {
     this->size = size;
   }
 
-  unsigned long awesome_hash(unsigned char *str) {
+  unsigned int awesome_hash(string data) {
+    const char* str = data.c_str();
     unsigned long hash = 5381;
     int c;
     while (c = *str++)
       hash = ((hash << 5) + hash) + c; /* hash * 33 + c */
     return hash % size;
-  }
-
-  unsigned long awesome_hash(string data) {
-    return awesome_hash(data.c_str());
   }
 
   unsigned int awesome_hash(int data) {
@@ -60,9 +57,20 @@ class HashTable {
     return buckets[key]->find_data(data);
   }
 
+  bool confirm_data(T data) {
+    unsigned int key = awesome_hash(data);
+    return buckets[key]->confirm_data(data);
+  }
+
   void display() {
     for (int i = 0; i < size; ++i) {
       buckets[i]->display_tree();
+    }
+  }
+
+  void delete_all() {
+    for (int i = 0; i < size; ++i) {
+      buckets[i]->delete_all();
     }
   }
 

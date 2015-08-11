@@ -238,6 +238,20 @@ class AVLTree {
     return found;
   }
 
+  bool confirm_data(T data) {
+    AVLNode<T>* result = find(data, root);
+    if(result == NULL) return false;
+    else return true;
+  }
+
+  void delete_all() {
+    if(root != NULL) {
+      root->delete_tree();
+      delete root;
+      root = NULL;
+    }
+  }
+
   ~AVLTree() {
     if(root != NULL) {
       root->delete_tree();

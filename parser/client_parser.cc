@@ -7,69 +7,131 @@
 int yyparse(expression **exp, yyscan_t scanner);
 
 class ClientParser {
-  public:
   Server* server;
-  SharedDS* shared_ds;
 
-  void execute(expression *exp) {
-    if(exp->tok_type == eVAL) return;
+  std::string insert_op(expression* value) {
+    if(value == NULL || value->tok_type != eVAL) return "Syntax Error!";
 
-    expression* command = exp;
-    expression* value = exp->operand;
-    cout << " Value of type: ";
+    int status = false;
     switch (value->opr_type) {
       case eINT:
         cout << "INTEGER: " << value->int_val;
+        status = shared_ds->insert_data(value->int_val);
         break;
       case eSTRING:
         cout << "STRING: " << value->str_val;
+        status = shared_ds->insert_data(value->str_val);
         break;
       case eFLOAT:
         cout << "FLOAT: " << value->float_val;
-        break;
-      case eALL:
-        cout << "ALL";
-        break;
-      case eSTATUS:
-        cout << "STATUS";
-        break;
-      case eCLIENTDETAILS:
-        cout << "CLIENT DETAILS";
+        status = shared_ds->insert_data(value->float_val);
         break;
     }
-    cout << endl;
+
+    if(status) {
+      return "Operation performed successfuly!";
+    } else {
+      return "Operation failed!";
+    }
   }
 
-  void evaluate(expression *exp) {
+  std::string delete_op(expression* value) {
+    if(value == NULL || value->tok_type != eVAL) return "Syntax Error!";
+
+    switch (value->opr_type) {
+      case eINT:
+        cout << "INTEGER: " << value->int_val;
+        shared_ds->delete_data(value->int_val);
+        break;
+      case eSTRING:
+        cout << "STRING: " << value->str_val;
+        shared_ds->delete_data(value->str_val);
+        break;
+      case eFLOAT:
+        cout << "FLOAT: " << value->float_val;
+        shared_ds->delete_data(value->float_val);
+        break;
+      case eALL:
+        cout << "ALL!";
+        shared_ds->delete_all();
+        break;
+    }
+
+    return "Operation performed successfuly!";
+  }
+
+  std::string find_op(expression* value) {
+    if(value == NULL || value->tok_type != eVAL) return "Syntax Error!";
+    std::stringstream response;
+    response << "FOUND VALUE ";
+    bool found = false;
+
+    switch (value->opr_type) {
+      case eINT:
+        cout << "INTEGER: " << value->int_val;
+        found = shared_ds->confirm_data(value->int_val);
+        response << value->int_val;
+        break;
+      case eSTRING:
+        cout << "STRING: " << value->str_val;
+        found = shared_ds->confirm_data(value->str_val);
+        response << value->str_val;
+        break;
+      case eFLOAT:
+        cout << "FLOAT: " << value->float_val;
+        found = shared_ds->confirm_data(value->float_val);
+        response << value->float_val;
+        break;
+    }
+
+    if(found) return response.str();
+    else return "NOT FOUND";
+  }
+
+  std::string show_op(expression* value) {
+    if(value == NULL || value->tok_type != eVAL) return "Syntax Error!";
+
+    switch (value->opr_type) {
+      case eSTATUS:
+        return shared_ds->status();
+        break;
+      case eCLIENTDETAILS:
+        return server->get_clients_connected();
+        break;
+    }
+  }
+
+  std::string evaluate(expression *exp) {
     if(exp == NULL) {
-      cout << "Syntax Error!" << endl;
-      return;
+      return "Syntax Error!";
     }
 
     switch (exp->tok_type) {
       case eINSERT:
-        cout << "INSERT command invoked!";
-        execute(exp);
-        break;
-      case eVAL:
-        cout << "Bad man!" << endl;
+        return insert_op(exp->operand);
         break;
       case eDELETE:
-        cout << "DELETE command invoked!";
-        execute(exp);
+        return delete_op(exp->operand);
         break;
       case eFIND:
-        cout << "FIND command invoked!";
-        execute(exp);
+        return find_op(exp->operand);
         break;
       case eSHOW:
-        cout << "SHOW command invoked!";
-        execute(exp);
+        return show_op(exp->operand);
         break;
     }
   }
 
-  expression* getAST(const char *expr) {
+  public:
+  ClientParser() {}
+
+  SharedDS* shared_ds;
+  ClientParser(Server* server, SharedDS* shared_ds) {
+    this->server = server;
+    this->shared_ds = shared_ds;
+  }
+
+  expression* getCommandTree(const char *expr) {
     expression *exp;
     yyscan_t scanner;
     YY_BUFFER_STATE state;
@@ -85,6 +147,13 @@ class ClientParser {
     yylex_destroy(scanner);
 
     return exp;
+  }
+
+  std::string parse_and_eval(const char *expr) {
+    expression* e = getCommandTree(expr);
+    std::string response = evaluate(e);
+    delete e;
+    return response;
   }
 
 };

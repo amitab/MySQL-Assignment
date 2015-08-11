@@ -1,10 +1,4 @@
-/*
- * Expression.c
- * Implementation of functions used to build the syntax tree.
- */
-
 #include "Expression.h"
-
 #include <stdlib.h>
 
 expression::expression(int val) {
@@ -13,12 +7,14 @@ expression::expression(int val) {
   tok_type = eVAL;
   operand = NULL;
 }
+
 expression::expression(double val) {
   float_val = val;
   opr_type = eFLOAT;
   tok_type = eVAL;
   operand = NULL;
 }
+
 expression::expression(std::string val) {
   str_val = val;
   str_val.erase(str_val.begin());

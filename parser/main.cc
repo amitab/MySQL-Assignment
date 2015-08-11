@@ -3,7 +3,7 @@
 int main(void)
 {
   ClientParser p;
-  expression *e = NULL;
+  p.shared_ds = new SharedDS(100);
   std::string test;
 
   while(1) {
@@ -11,10 +11,9 @@ int main(void)
     getline(cin, test);
     if(test == "EXIT") break;
     test += "\n";
-    e = p.getAST(test.c_str());
-    p.evaluate(e);
-    if(e != NULL) delete e;
+    cout <<  p.parse_and_eval(test.c_str());
+    cout << "SHOWING DATA: "; p.shared_ds->show();
   }
-
+  delete p.shared_ds;
   return 0;
 }
