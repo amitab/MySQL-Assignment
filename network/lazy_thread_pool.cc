@@ -58,7 +58,6 @@ LazyThreadPool::LazyThreadPool(int size, int idle_time) {
 
   MAX_POOL_SIZE = size;
   thread_idle_time = idle_time;
-  client_queue_mutex.accquire_lock();
 
   // Create one persistent thread
   create_worker(0);
@@ -114,4 +113,10 @@ LazyThreadPool::~LazyThreadPool() {
   }
   clear_dead_threads();
   workers.clear();
+
+  while (!client_queue.empty()) {
+    ClientThread* t = client_queue.front();
+    delete t;
+    client_queue.pop();
+  }
 }

@@ -35,7 +35,11 @@ void* handle_clients(ClientThread* client_thread) {
 }
 
 void signal_handler(int signum) {
+  cout << "Force Shutting down server!" << endl;
   server->kill_server();
+
+  delete server;
+  delete shared_ds;
   exit(0);
 }
 

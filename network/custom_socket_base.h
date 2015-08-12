@@ -22,7 +22,7 @@ protected:
   struct sockaddr_in addr;
 
   void shutdown();
-
+  int accept_connection(int server_socket, struct sockaddr_in& addr);
 public:
   CustomSocketBase();
 

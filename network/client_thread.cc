@@ -1,9 +1,12 @@
 #include "client_thread.h"
 
-ClientThread::ClientThread(int server_socket, ClientHandler handler) {
+ClientThread::ClientThread(int client_socket, ClientHandler handler) {
   admin = false;
   len = sizeof(addr);
-  sockfd = accept(server_socket, (struct sockaddr *)&addr, &len);
+  if(getpeername(client_socket, (struct sockaddr *)&addr, &len) == -1) {
+    throw errno;
+  }
+  sockfd = client_socket;
 
   if(sockfd < 0) {
     std::cerr << "ERROR on accept: " << strerror(errno) << std::endl;

@@ -1,8 +1,9 @@
 #include "server.h"
 
 bool Server::accept_client(ClientHandler handler) {
-  // This ptr deleted in thread_manager
-  ClientThread* client_thread = new ClientThread(sockfd, handler);
+  struct sockaddr_in client_addr;
+  int client_socket = accept_connection(sockfd, client_addr);
+  ClientThread* client_thread = new ClientThread(client_socket, handler);
   return thread_manager.add_task(client_thread);
 }
 

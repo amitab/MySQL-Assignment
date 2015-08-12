@@ -31,4 +31,7 @@ bool CustomSocketBase::bind_socket(short family, unsigned long address, unsigned
   return true;
 }
 
-
+int CustomSocketBase::accept_connection(int server_socket, struct sockaddr_in& addr) {
+  socklen_t len = sizeof(addr);
+  return accept(server_socket, (struct sockaddr *)&addr, &len);
+}
