@@ -1,5 +1,11 @@
-!*\.*
-*\.swp
-*\.swo
-*Lexer\.(cc|h)
-*Parser\.(cc|h)
+*
+!*/
+!*.*
+**/*.o
+**/*.swp
+**/*.swo
+**/*.h.gch
+parser/Lexer.cc
+parser/Lexer.h
+parser/Parser.h
+parser/Parser.cc

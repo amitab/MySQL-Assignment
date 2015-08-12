@@ -36,6 +36,7 @@ void* handle_clients(ClientThread* client_thread) {
 
 void signal_handler(int signum) {
   server->kill_server();
+  exit(0);
 }
 
 int main(int argc, char *argv[]) {
@@ -44,7 +45,13 @@ int main(int argc, char *argv[]) {
     return 0;
   }
 
-  signal(SIGINT, signal_handler);
+  struct sigaction sigIntHandler;
+
+  sigIntHandler.sa_handler = signal_handler;
+  sigemptyset(&sigIntHandler.sa_mask);
+  sigIntHandler.sa_flags = 0;
+
+  sigaction(SIGINT, &sigIntHandler, NULL);
 
   int hash_size = atoi(argv[2]);
   int worker_count = atoi(argv[3]);
