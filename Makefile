@@ -1,21 +1,34 @@
 NETWORK_SERVER = network/client_queue_mutex.o network/client_thread.o network/custom_socket_base.o network/custom_socket.o network/lazy_thread_pool.o network/server.o network/worker.o
 NETWORK_CLIENT = network/client.o network/custom_socket_base.o network/custom_socket.o
-DB = db/avl_node.o db/avl_tree.o db/hash_table.o db/shared_ds.o
-PARSER = parser/client_parser.o parser/Expression.o parser/Lexer.o parser/Parser.o
+DB = db/avl_node.h db/avl_tree.h db/hash_table.h db/shared_ds.o
+PARSER = parser/client_parser.o parser/Expression.o parser/Lexer.cc parser/Parser.cc
 CC = g++
 CFLAGS = -g -lpthread -lreadline
 
-makeserver: network db parser
+all: network db parser server client
+
+parser_files:
+	(cd parser; make all)
+
+db_files:
+	cd db && make all
+
+network_files:
+	cd network && make all
+
+server: parser_files network_files db_files
 	$(CC) $(NETWORK_SERVER) $(PARSER) $(DB) server_process.cc -o server $(CFLAGS)
 
-makeclient:network
+client: network_files
 	$(CC) $(NETWORK_CLIENT) client_process.cc -o client $(CFLAGS)
 
-parser:
-	cd parser && $(MAKE) all
+clean_network:
+	cd network && $(MAKE) clean
 
-db:
-	cd db && $(MAKE) all
+clean_db:
+	cd db && $(MAKE) clean
 
-network:
-	cd network && $(MAKE) all
+clean_parser:
+	cd parser && $(MAKE) clean
+
+clean: clean_network clean_db clean_parser

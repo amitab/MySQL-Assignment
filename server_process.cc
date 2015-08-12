@@ -1,3 +1,6 @@
+#include <signal.h>
+#include <unistd.h>
+
 #include "db/shared_ds.h"
 #include "network/server.h"
 #include "parser/client_parser.h"
@@ -31,10 +34,25 @@ void* handle_clients(ClientThread* client_thread) {
   }
 }
 
+void signal_handler(int signum) {
+  server->kill_server();
+}
+
 int main(int argc, char *argv[]) {
+  if(argc < 4) {
+    cout << "USAGE: " << argv[0] << " [port] [hash_size] [worker_count] [idle_time]" << endl;
+    return 0;
+  }
+
+  signal(SIGINT, signal_handler);
+
   int hash_size = atoi(argv[2]);
+  int worker_count = atoi(argv[3]);
+  int idle_time = atoi(argv[4]);
+  int port = atoi(argv[1]);
+
   shared_ds = new SharedDS(hash_size);
-  server = new Server(AF_INET, INADDR_ANY, atoi(argv[1]), 4, 10);
+  server = new Server(AF_INET, INADDR_ANY, port, worker_count, idle_time);
   server->serve(5, &handle_clients);
 
   delete server;
