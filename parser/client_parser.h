@@ -1,3 +1,6 @@
+#ifndef __CLIENTPARSER_H__
+#define __CLIENTPARSER_H__
+
 #include "Expression.h"
 #include "Parser.h"
 #include "Lexer.h"
@@ -29,3 +32,5 @@ class ClientParser {
   expression* getCommandTree(const char *expr);
   std::string parse_and_eval(std::string expr);
 };
+
+#endif
