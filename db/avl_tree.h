@@ -1,4 +1,7 @@
-#include "avl_node.cc"
+#ifndef __AVLTREE_H__
+#define __AVLTREE_H__
+
+#include "avl_node.h"
 #include "mutex.cc"
 #include <limits>
 
@@ -261,6 +264,7 @@ class AVLTree {
   }
 };
 
+/*
 void double_imbalance() {
   AVLTree<int> tree;
   int array[] = {50, 25, 75, 10, 30, 60, 80, 5, 15, 27, 55, 1};
@@ -328,6 +332,8 @@ void delete_tests() {
   t3.delete_node(1);
   t3.display_tree(); cout << endl << endl;
 }
+
+*/
 /*
 int main(int argc, char *argv[])
 {
@@ -336,3 +342,5 @@ int main(int argc, char *argv[])
   return 0;
 }
 */
+
+#endif

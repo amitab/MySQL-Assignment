@@ -1,4 +1,5 @@
-#pragma once
+#ifndef __WORKER_H__
+#define __WORKER_H__
 
 #include <cstring>
 #include <string>
@@ -10,8 +11,8 @@
 
 #include <pthread.h>
 #include <errno.h>
-#include "client_thread.cc"
-#include "client_queue_mutex.cc"
+#include "client_thread.h"
+#include "client_queue_mutex.h"
 #include <cxxabi.h>
 
 
@@ -30,8 +31,10 @@ class Worker {
   // Delete this ptr at end of every thread loop
   ClientThread* client_thread;
 
-  void (*thread_cleanup_routine) (void*);
+  void (*thread_cleanup_routine)(void*);
   bool active;
+
+  void the_situation();
 
   static void * thread_entry_func(void * args) {
     pthread_setcanceltype(PTHREAD_CANCEL_ASYNCHRONOUS, NULL);
@@ -104,74 +107,29 @@ class Worker {
     pthread_exit(0);
   }
 
-  void the_situation() {
-     if(queue_access->try_to_lock_queue() != 0) {
-        if(client_queue->size() > 0) {
-          std::cout << "[" << thread  << "]Force: Signal queue has clients." << std::endl;
-          queue_access->signal_not_empty();
-        } else {
-          std::cout << "[" << thread  << "]Force: Signal queue no clients" << std::endl;
-          queue_access->set_empty();
-        }
-        queue_access->unlock();
-      }
-  }
 
-public:
+  public:
   int unique_id;
 
-  Worker() {}
+  Worker();
 
-  Worker(ClientQueueMutex* queue_access, ClientQueue* client_queue, int idle_time) {
-    this->queue_access = queue_access;
-    this->client_queue = client_queue;
-    this->idle_time = idle_time;
-    this->client_thread = NULL;
+  Worker(ClientQueueMutex* queue_access, ClientQueue* client_queue, int idle_time);
 
-    if(idle_time == 0) {
-      persist = true;
-    } else {
-      persist = false;
-    }
+  ClientThread* get_client_thread();
 
-    active = false;
-    thread_cleanup_routine = NULL;
-  }
+  bool start();
 
-  ClientThread* get_client_thread() {
-    return client_thread;
-  }
+  bool is_active();
 
-  bool start() {
-    return (pthread_create(&thread, NULL, thread_entry_func, this) == 0);
-  }
+  void delete_client_thread();
 
-  bool is_active() {
-    return active;
-  }
+  void setup_cleanup(void (*thread_cleanup_routine)(void*), void* args);
 
-  void delete_client_thread() {
-    if(client_thread != NULL) {
-      std::cout << "Deleting client thread: " << thread << "\n\n";
-      delete client_thread;
-    }
-    client_thread = NULL;
-  }
+  ~Worker();
 
-  void setup_cleanup(void (*thread_cleanup_routine) (void*), void* args) {
-    this->thread_cleanup_routine = thread_cleanup_routine;
-    this->thread_cleanup_args = args;
-  }
+  void wait_for_exit();
 
-  ~Worker() {
-    delete_client_thread();
-  }
-
-  void wait_for_exit() {
-     (void) pthread_join(thread, NULL);
-  }
-
-  pthread_t& get_id() {
-    return thread;
-  }
+  pthread_t& get_id();
 };
+
+#endif

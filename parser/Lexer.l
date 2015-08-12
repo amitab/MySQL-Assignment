@@ -10,6 +10,7 @@
 
 #include <iostream>
 #include <cstdlib>
+#include <cstring>
 using namespace std;
 
 %}
@@ -19,6 +20,8 @@ using namespace std;
 
 %option reentrant noyywrap never-interactive nounistd
 %option bison-bridge
+
+ADMIN               ^ADMIN
 
 INSERT              ^INSERT
 DELETE              ^DELETE
@@ -36,6 +39,8 @@ WS                  [ \r\n\t]+
 %%
 
 {WS}                { return TOKEN_WS; }
+
+{ADMIN}             { return TOKEN_ADMIN;  }
 {INSERT}            { return TOKEN_INSERT; }
 {DELETE}            { return TOKEN_DELETE; }
 {FIND}              { return TOKEN_FIND; }

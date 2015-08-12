@@ -1,6 +1,9 @@
+#ifndef __HASHTABLE_H__
+#define __HASHTABLE_H__
+
 #include <iostream>
 #include <cmath>
-#include "avl_tree.cc"
+#include "avl_tree.h"
 using namespace std;
 
 template <class T>
@@ -100,3 +103,5 @@ int main() {
   return 0;
 }
 */
+
+#endif

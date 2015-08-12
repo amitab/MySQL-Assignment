@@ -26,7 +26,8 @@ enum token_type {
   eINSERT,
   eDELETE,
   eFIND,
-  eSHOW
+  eSHOW,
+  eADMIN
 };
 
 class expression {

@@ -41,13 +41,13 @@ using namespace std;
 }
 
 %token TOKEN_INSERT TOKEN_DELETE TOKEN_FIND TOKEN_SHOW TOKEN_STATUS TOKEN_ALL TOKEN_WS TOKEN_CLIENT_DETAILS
-%token <exp> TOKEN_INT TOKEN_FLOAT TOKEN_STRING
+%token <exp> TOKEN_INT TOKEN_FLOAT TOKEN_STRING TOKEN_ADMIN
 
 %type <exp> expr operand
 %%
 
 input
-    : expr TOKEN_WS { *exp = $1;  }
+    : expr TOKEN_WS { *exp = $1; }
     ;
 
 operand
@@ -57,6 +57,7 @@ operand
 
 expr
     : TOKEN_INSERT TOKEN_WS operand { $$ = new expression(eINSERT, $3); }
+    | TOKEN_ADMIN TOKEN_WS TOKEN_STRING { cout << "ADMIN!" << endl;$$ = new expression(eADMIN, $3);  }
     | TOKEN_DELETE TOKEN_WS operand { $$ = new expression(eDELETE, $3); }
     | TOKEN_FIND TOKEN_WS operand { $$ = new expression(eFIND, $3); }
     | TOKEN_SHOW TOKEN_WS TOKEN_STATUS { $$ = new expression(eSHOW, new expression(eSTATUS)); }

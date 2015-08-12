@@ -1,3 +1,6 @@
+#ifndef __AVLNODE_H__
+#define __AVLNODE_H__
+
 #include <iostream>
 using namespace std;
 
@@ -104,3 +107,5 @@ public:
   }
 
 };
+
+#endif // __AVLNODE_H__

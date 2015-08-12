@@ -1,4 +1,4 @@
-#include "client_parser.cc"
+#include "client_parser.h"
 
 int main(void)
 {
@@ -10,8 +10,7 @@ int main(void)
     cout << "ENTER: ";
     getline(cin, test);
     if(test == "EXIT") break;
-    test += "\n";
-    cout <<  p.parse_and_eval(test.c_str());
+    cout <<  p.parse_and_eval(test);
     cout << "SHOWING DATA: "; p.shared_ds->show();
   }
   delete p.shared_ds;
