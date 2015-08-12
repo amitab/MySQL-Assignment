@@ -5,6 +5,7 @@
 **/*.swp
 **/*.swo
 **/*.h.gch
+**/*.*~
 parser/Lexer.cc
 parser/Lexer.h
 parser/Parser.h
