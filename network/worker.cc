@@ -11,6 +11,8 @@ void Worker::the_situation() {
     queue_access->unlock();
   }
   thread = 0;
+  active = false;
+  delete_client_thread();
 }
 
 Worker::Worker() {}

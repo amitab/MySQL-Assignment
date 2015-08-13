@@ -4,7 +4,6 @@ Client::Client(short family, std::string address, unsigned short port): CustomSo
     create_socket();
     server = gethostbyname(address.c_str());
     if (server == NULL) {
-      std::cerr << "ERROR bad host" << strerror(errno) << std::endl;
       throw errno;
     }
 
@@ -13,8 +12,11 @@ Client::Client(short family, std::string address, unsigned short port): CustomSo
     addr.sin_port = htons(port);
 
     if (connect(sockfd, (struct sockaddr*)&addr, sizeof(addr)) < 0) {
-      std::cerr << "Error connecting: " << strerror(errno) << std::endl;
       throw errno;
     }
-  }
+}
+
+int Client::reconnect() {
+  return connect(sockfd, (struct sockaddr*)&addr, sizeof(addr));
+}
 

@@ -90,6 +90,7 @@ class Worker {
       throw;
     } catch(int err) {
       self->the_situation();
+      pthread_exit(0);
     }
     self->thread = 0;
     pthread_exit(0);

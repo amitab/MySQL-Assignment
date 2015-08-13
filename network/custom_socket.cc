@@ -32,19 +32,7 @@ std::string CustomSocket::recv(int sockfd) {
   int retry = 0;
   while (request.find(";") == std::string::npos) {
     int nread = ::recv(sockfd,buf_,1024,0);
-    if (nread < 0) {
-      if (errno == EINTR) {
-        retry++;
-        if(retry > 10) {
-          throw errno;
-        } else {
-          continue;
-        }
-      }
-      else {
-        throw errno;
-      }
-    } else if (nread == 0) {
+    if (nread <= 0) {
       throw errno;
     }
     request.append(buf_,nread);
@@ -59,18 +47,7 @@ void CustomSocket::send(std::string response, int sockfd) {
   int nleft = response.length();
   int nwritten;
   while (nleft) {
-    if ((nwritten = ::send(sockfd, ptr, nleft, 0)) < 0) {
-      if (errno == EINTR) {
-        retry++;
-        if(retry > 10) {
-          throw errno;
-        } else {
-          continue;
-        }
-      } else {
-        throw errno;
-      }
-    } else if (nwritten == 0) {
+    if ((nwritten = ::send(sockfd, ptr, nleft, 0)) <= 0) {
       throw errno;
     }
     nleft -= nwritten;

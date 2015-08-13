@@ -10,8 +10,8 @@ int main(int argc, char *argv[]) {
   std::string read_message = "";
   std::string write_message = "";
 
-  if (argc <3) {
-    std::cout << "Usage: " << argv[0] << " host port" << std::endl;
+  if (argc < 3) {
+    std::cout << "Usage: " << argv[0] << " [host] [port]" << std::endl;
     exit(0);
   }
   portno = atoi(argv[2]);
@@ -21,16 +21,20 @@ int main(int argc, char *argv[]) {
   std::cout << read_message << std::endl;
 
   while(1) {
-    std::cout << "Enter Message: ";
-    write_buffer = readline("");
-    write_message.append(write_buffer, strlen(write_buffer));
+    try {
+      write_buffer = readline("$>");
+      write_message.append(write_buffer, strlen(write_buffer));
 
-    client.send_message(write_message);
-    read_message = client.recieve_message();
+      client.send_message(write_message);
+      read_message = client.recieve_message();
 
-    std::cout << read_message << std::endl;
-    if(write_message.compare("EXIT") == 0) break;
-    write_message = "";
+      std::cout << read_message << std::endl;
+      if(write_message.compare("EXIT") == 0) break;
+      write_message = "";
+    } catch (int err) {
+      std::cerr << strerror(err) << std::endl;
+      break;
+    }
   }
 
   delete write_buffer;

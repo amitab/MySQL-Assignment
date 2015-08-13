@@ -6,4 +6,5 @@ private:
 
 public:
   Client(short family, std::string address, unsigned short port); 
+  int reconnect();
 };
