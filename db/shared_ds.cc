@@ -12,18 +12,21 @@ void SharedDS::delete_all() {
 }
 
 bool SharedDS::insert_data(string data) {
-  str_count++;
-  return string_ds.insert_data(data);
+  bool status = string_ds.insert_data(data);
+  if(status) str_count++;
+  return status;
 }
 
 bool SharedDS::insert_data(int data) {
-  int_count++;
-  return int_ds.insert_data(data);
+  bool status = int_ds.insert_data(data);
+  if(status) int_count++;
+  return status;
 }
 
 bool SharedDS::insert_data(float data) {
-  float_count++;
-  return float_ds.insert_data(data);
+  bool status = float_ds.insert_data(data);
+  if(status) float_count++;
+  return status;
 }
 
 void SharedDS::delete_data(string data) {

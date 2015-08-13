@@ -44,6 +44,7 @@ std::string LazyThreadPool::get_client_list() {
     if(!((*it)->is_active())) continue;
 
     data << i << ": " << (*it)->get_client_thread()->get_client_ip_address();
+    data << ", " << (*it)->get_client_thread()->get_client_conn_time();
     if(it != (workers.end() - 1)) {
       data << "\n";
     }

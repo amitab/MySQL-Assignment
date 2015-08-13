@@ -113,7 +113,9 @@ class AVLTree {
       success = insert(data, current->left, current);
     } else if(*current < data) {
       success = insert(data, current->right, current);
-    } else return false;
+    } else if(*current == data) {
+      return false;
+    }
 
     current->calc_height();
     balance(current);
@@ -205,11 +207,11 @@ class AVLTree {
 
   bool insert(T data) {
     mutex.accquire_lock();
-    int ret_val = insert(data, root, NULL);
+    bool ret_val = insert(data, root, NULL);
     mutex.unlock();
     mutex.signal_free();
 
-    return ret_val >= 0;
+    return ret_val;
   }
 
   void insert_many(T* datum, int size) {

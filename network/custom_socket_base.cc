@@ -7,6 +7,7 @@ void CustomSocketBase::shutdown() {
 
 CustomSocketBase::CustomSocketBase() {
   std::memset((void *) &addr, 0, sizeof(addr));
+  sockfd = 0;
 }
 
 CustomSocketBase::~CustomSocketBase() {
