@@ -35,12 +35,18 @@ void* handle_clients(ClientThread* client_thread) {
 }
 
 void signal_handler(int signum) {
-  cout << "Force Shutting down server!" << endl;
-  server->kill_server();
+  signal(SIGINT, signal_handler);
 
-  delete server;
-  delete shared_ds;
-  exit(0);
+  if(server->has_active_clients()) {
+    std::cout << "Cannot shutdown! Clients connected!" << std::endl;
+  } else {
+    cout << "Force Shutting down server!" << endl;
+    server->kill_server();
+
+    delete server;
+    delete shared_ds;
+    exit(0);
+  }
 }
 
 int main(int argc, char *argv[]) {
@@ -49,13 +55,7 @@ int main(int argc, char *argv[]) {
     return 0;
   }
 
-  struct sigaction sigIntHandler;
-
-  sigIntHandler.sa_handler = signal_handler;
-  sigemptyset(&sigIntHandler.sa_mask);
-  sigIntHandler.sa_flags = 0;
-
-  sigaction(SIGINT, &sigIntHandler, NULL);
+  signal(SIGINT, signal_handler);
 
   int hash_size = atoi(argv[2]);
   int worker_count = atoi(argv[3]);
