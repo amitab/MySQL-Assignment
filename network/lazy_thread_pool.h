@@ -50,6 +50,8 @@ public:
 
   bool add_task(ClientThread* client_thread);
 
+  bool has_active_clients();
+
   ~LazyThreadPool();
 };
 

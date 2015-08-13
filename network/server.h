@@ -24,7 +24,7 @@ public:
   std::string get_clients_connected();
   void serve(int backlog, ClientHandler handler);
   void kill_server();
-
+  bool has_active_clients();
 };
 
 #endif

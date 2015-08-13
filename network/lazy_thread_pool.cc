@@ -121,3 +121,12 @@ LazyThreadPool::~LazyThreadPool() {
     client_queue.pop();
   }
 }
+
+bool LazyThreadPool::has_active_clients() {
+  for (std::vector<Worker*>::iterator it = workers.begin() ; it != workers.end(); ++it) {
+    if((*it)->is_active()) {
+      return true;
+    }
+  }
+  return false;
+}

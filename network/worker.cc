@@ -2,6 +2,7 @@
 
 void Worker::the_situation() {
   if(queue_access->try_to_lock_queue() != 0) {
+    queue_access->signal_access();
     if(client_queue->size() > 0) {
       std::cout << "[" << thread  << "]Force: Signal queue has clients." << std::endl;
       queue_access->signal_not_empty();

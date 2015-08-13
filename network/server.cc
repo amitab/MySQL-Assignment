@@ -23,6 +23,10 @@ void Server::serve(int backlog, ClientHandler handler) {
   std::cout << "Stopped serving more clients." << std::endl;
 }
 
+bool Server::has_active_clients() {
+  return thread_manager.has_active_clients();
+}
+
 void Server::kill_server() {
   server_running = false;
   shutdown();
