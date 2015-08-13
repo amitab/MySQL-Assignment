@@ -46,6 +46,8 @@ public:
   void unlock();
 
   ~ClientQueueMutex();
+
+  void broadcast_conds();
 };
 
 #endif

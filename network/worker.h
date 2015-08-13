@@ -88,6 +88,9 @@ class Worker {
         if(self->client_thread != NULL) {
           std::cout << "Starting task: " << self->thread << "\n";
           self->client_thread->client_handler(self->client_thread);
+        } else {
+          std::cout << "Woke up and there was nothing! Killing myself." << std::endl;
+          break;
         }
 
         self->active = false;
@@ -103,7 +106,7 @@ class Worker {
       self->the_situation();
       std::cerr << "Thread with id " << self->thread << " has stopped running: " << strerror(err) << "\n\n";
     }
-
+    self->thread = 0;
     pthread_exit(0);
   }
 

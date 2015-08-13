@@ -103,13 +103,28 @@ bool LazyThreadPool::add_task(ClientThread* client_thread) {
 LazyThreadPool::~LazyThreadPool() {
   std::cout << "Killing threads in pool" << std::endl;
   std::map<pthread_t, int>::iterator it;
+  int worker_id;
+  pthread_t thread_id;
+
+  client_queue_mutex.broadcast_conds();
   while (!active_workers.empty()) {
     it = active_workers.begin();
-    pthread_cancel(it->first);
-    workers[it->second]->wait_for_exit();
+    
+    thread_id = it->first;
+    worker_id = it->second;
+
+    pthread_cancel(thread_id);
+    std::cout << "waiting for " << thread_id << " to join with " << pthread_self() << std::endl;
+    workers[worker_id]->wait_for_exit();
+    std::cout << thread_id << " joined with " <<  pthread_self() << std::endl;
   }
   active_workers.clear();
+  
   for (std::vector<Worker*>::iterator it = workers.begin() ; it != workers.end(); ++it) {
+    if((*it)->get_id() != 0) {
+      pthread_cancel((*it)->get_id());
+      workers[(*it)->unique_id]->wait_for_exit();
+    }
     delete (*it);
   }
   clear_dead_threads();
@@ -125,6 +140,7 @@ LazyThreadPool::~LazyThreadPool() {
 bool LazyThreadPool::has_active_clients() {
   for (std::vector<Worker*>::iterator it = workers.begin() ; it != workers.end(); ++it) {
     if((*it)->is_active()) {
+      std::cout << (*it)->get_id() << " is still running!" << std::endl;
       return true;
     }
   }

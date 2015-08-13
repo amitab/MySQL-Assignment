@@ -149,3 +149,11 @@ ClientQueueMutex::~ClientQueueMutex() {
   pthread_cond_destroy(&queue_not_empty);
   pthread_cond_destroy(&queue_access);
 }
+
+void ClientQueueMutex::broadcast_conds() {
+  std::cout << "Broadcasting to all" << std::endl;
+  is_empty = false;
+  pthread_cond_broadcast(&queue_not_empty);
+  is_locked = false;
+  pthread_cond_broadcast(&queue_access);
+}

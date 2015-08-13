@@ -1,6 +1,7 @@
 #include "worker.h"
 
 void Worker::the_situation() {
+  std::cout << pthread_self() << " called situation" << std::endl;
   if(queue_access->try_to_lock_queue() != 0) {
     queue_access->signal_access();
     if(client_queue->size() > 0) {
@@ -12,6 +13,8 @@ void Worker::the_situation() {
     }
     queue_access->unlock();
   }
+  std::cout << pthread_self() << " done with situation" << std::endl;
+  thread = 0;
 }
 
 Worker::Worker() {}
@@ -21,6 +24,7 @@ Worker::Worker(ClientQueueMutex* queue_access, ClientQueue* client_queue, int id
   this->client_queue = client_queue;
   this->idle_time = idle_time;
   this->client_thread = NULL;
+  this->thread = 0;
 
   if(idle_time == 0) {
     persist = true;
