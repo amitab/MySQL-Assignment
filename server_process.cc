@@ -15,7 +15,6 @@ void* handle_clients(ClientThread* client_thread) {
 
   while(1) {
     read_buffer = client_thread->recieve_message();
-    std::cout << "Recieved: " << read_buffer << std::endl;
 
     if(read_buffer.compare("EXIT") == 0) {
       client_thread->send_message("Bye");

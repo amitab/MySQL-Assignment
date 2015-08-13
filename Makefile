@@ -7,6 +7,9 @@ CFLAGS = -g -lpthread -lreadline
 
 all: server client
 
+test: server client
+	$(CC) -std=c++11 $(NETWORK_CLIENT) tests.cc -o speed_test $(CFLAGS)
+
 parser_files:
 	(cd parser; make all)
 
