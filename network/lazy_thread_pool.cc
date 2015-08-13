@@ -55,12 +55,9 @@ std::string LazyThreadPool::get_client_list() {
 }
 
 LazyThreadPool::LazyThreadPool(int size, int idle_time) {
-  std::cout << "Init Threadpool\n";
-
   MAX_POOL_SIZE = size;
   thread_idle_time = idle_time;
 
-  // Create one persistent thread
   create_worker(0);
 
   for (int i = 0; i < size - 1; ++i) {
@@ -71,37 +68,26 @@ LazyThreadPool::LazyThreadPool(int size, int idle_time) {
 bool LazyThreadPool::add_task(ClientThread* client_thread) {
   clear_dead_threads();
   std::cout << get_client_list() << std::endl;
-  // Dont accept if pool full!
   if(inactive_workers.size() == 0 && client_queue_mutex.get_waiting_thread_count() == 0) {
     client_thread->send_message("Server Full...");
     delete client_thread;
     return false;
   }
 
-  std::cout << "Waiting for queue access" << std::endl;
   client_queue_mutex.lock_wait_for_access();
-  std::cout << "Got queue access" << std::endl;
-
-  std::cout << "Adding task" << std::endl;
   client_queue.push(client_thread);
-
-  std::cout << "Waiting threads: " << client_queue_mutex.get_waiting_thread_count() << std::endl;
+  
   worker_start_working();
-
   client_thread->send_message("Welcome!");
 
-  std::cout << "Signaling threads free for access" << std::endl;
   client_queue_mutex.signal_access();
-  std::cout << "Signaling threads not empty" << std::endl;
   client_queue_mutex.signal_not_empty();
-  std::cout << "Unlocking Mutex\n\n";
   client_queue_mutex.unlock();
 
   return true;
 }
 
 LazyThreadPool::~LazyThreadPool() {
-  std::cout << "Killing threads in pool" << std::endl;
   std::map<pthread_t, int>::iterator it;
   int worker_id;
   pthread_t thread_id;
@@ -114,9 +100,7 @@ LazyThreadPool::~LazyThreadPool() {
     worker_id = it->second;
 
     pthread_cancel(thread_id);
-    std::cout << "waiting for " << thread_id << " to join with " << pthread_self() << std::endl;
     workers[worker_id]->wait_for_exit();
-    std::cout << thread_id << " joined with " <<  pthread_self() << std::endl;
   }
   active_workers.clear();
   
@@ -140,7 +124,6 @@ LazyThreadPool::~LazyThreadPool() {
 bool LazyThreadPool::has_active_clients() {
   for (std::vector<Worker*>::iterator it = workers.begin() ; it != workers.end(); ++it) {
     if((*it)->is_active()) {
-      std::cout << (*it)->get_id() << " is still running!" << std::endl;
       return true;
     }
   }

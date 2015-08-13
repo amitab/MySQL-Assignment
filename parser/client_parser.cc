@@ -6,15 +6,12 @@ std::string ClientParser::insert_op(expression* value) {
   int status = false;
   switch (value->opr_type) {
     case eINT:
-      cout << "INTEGER: " << value->int_val;
       status = shared_ds->insert_data(value->int_val);
       break;
     case eSTRING:
-      cout << "STRING: " << value->str_val;
       status = shared_ds->insert_data(value->str_val);
       break;
     case eFLOAT:
-      cout << "FLOAT: " << value->float_val;
       status = shared_ds->insert_data(value->float_val);
       break;
   }
@@ -31,19 +28,15 @@ std::string ClientParser::delete_op(expression* value) {
 
   switch (value->opr_type) {
     case eINT:
-      cout << "INTEGER: " << value->int_val;
       shared_ds->delete_data(value->int_val);
       break;
     case eSTRING:
-      cout << "STRING: " << value->str_val;
       shared_ds->delete_data(value->str_val);
       break;
     case eFLOAT:
-      cout << "FLOAT: " << value->float_val;
       shared_ds->delete_data(value->float_val);
       break;
     case eALL:
-      cout << "ALL!";
       shared_ds->delete_all();
       break;
   }
@@ -59,17 +52,14 @@ std::string ClientParser::find_op(expression* value) {
 
   switch (value->opr_type) {
     case eINT:
-      cout << "INTEGER: " << value->int_val;
       found = shared_ds->confirm_data(value->int_val);
       response << value->int_val;
       break;
     case eSTRING:
-      cout << "STRING: " << value->str_val;
       found = shared_ds->confirm_data(value->str_val);
       response << value->str_val;
       break;
     case eFLOAT:
-      cout << "FLOAT: " << value->float_val;
       found = shared_ds->confirm_data(value->float_val);
       response << value->float_val;
       break;

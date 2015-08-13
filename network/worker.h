@@ -43,12 +43,9 @@ class Worker {
 
     try {
       self = (Worker*) args;
-      std::cout << "New thread spawned: " << self->thread << "\n";
       pthread_cleanup_push(self->thread_cleanup_routine, self->thread_cleanup_args);
 
       while(true) {
-
-        std::cout << "Waiting: " << self->thread << "\n";
         if(self->persist) {
           self->queue_access->lock_access_queue_not_empty();
         } else {
@@ -59,12 +56,7 @@ class Worker {
           }
         }
 
-        std::cout << "Got lock: " << self->thread << "\n";
-
-        std::cout << "Picking up a task: " << self->thread << "\n";
         self->active = true;
-
-        std::cout << "Removed task from queue: " << self->thread << "\n";
         if(self->client_queue->size() > 0) {
           self->client_thread = self->client_queue->front();
           self->client_queue->pop();
@@ -72,21 +64,16 @@ class Worker {
           self->client_thread = NULL;
         }
 
-        std::cout << "Signaling: " << self->thread << "\n";
         self->queue_access->signal_access();
         if(self->client_queue->size() > 0) {
-          std::cout << "Signaling threads not empty" << self->thread << std::endl;
           self->queue_access->signal_not_empty();
         } else {
           self->queue_access->set_empty();
-          std::cout << "Signaling threads empty" << self->thread << std::endl;
         }
 
-        std::cout << "Unlocking: " << self->thread << "\n";
         self->queue_access->unlock();
 
         if(self->client_thread != NULL) {
-          std::cout << "Starting task: " << self->thread << "\n";
           self->client_thread->client_handler(self->client_thread);
         } else {
           std::cout << "Woke up and there was nothing! Killing myself." << std::endl;
@@ -94,7 +81,6 @@ class Worker {
         }
 
         self->active = false;
-        std::cout << "Done with task: " << self->thread << "\n\n";
         self->delete_client_thread();
       }
 
@@ -104,7 +90,6 @@ class Worker {
       throw;
     } catch(int err) {
       self->the_situation();
-      std::cerr << "Thread with id " << self->thread << " has stopped running: " << strerror(err) << "\n\n";
     }
     self->thread = 0;
     pthread_exit(0);

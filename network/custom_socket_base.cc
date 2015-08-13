@@ -16,7 +16,7 @@ CustomSocketBase::~CustomSocketBase() {
 bool CustomSocketBase::create_socket() {
   this->sockfd = socket(AF_INET, SOCK_STREAM, 0);
   if(this->sockfd < 0) {
-    std::cerr << "ERROR opening socket: " << strerror(errno) << std::endl;
+    throw errno;
   }
   return (this->sockfd >= 0);
 }
@@ -26,8 +26,7 @@ bool CustomSocketBase::bind_socket(short family, unsigned long address, unsigned
   this->addr.sin_addr.s_addr = htonl(address);
   this->addr.sin_port = htons(port);
   if (bind(this->sockfd, (struct sockaddr *) &(this->addr), sizeof(this->addr)) < 0) {
-    std::cerr << "ERROR on binding: " << strerror(errno) << std::endl;
-    return false;
+    throw errno;
   }
   return true;
 }

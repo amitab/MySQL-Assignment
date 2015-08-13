@@ -16,11 +16,8 @@ void Server::serve(int backlog, ClientHandler handler) {
   while(server_running) {
     try {
       accept_client(handler);
-    } catch (int err) {
-      std::cout << "Error while client accept: " << strerror(err) << std::endl;
-    }
+    } catch (int err) {}
   }
-  std::cout << "Stopped serving more clients." << std::endl;
 }
 
 bool Server::has_active_clients() {

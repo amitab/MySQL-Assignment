@@ -1,19 +1,15 @@
 #include "worker.h"
 
 void Worker::the_situation() {
-  std::cout << pthread_self() << " called situation" << std::endl;
   if(queue_access->try_to_lock_queue() != 0) {
     queue_access->signal_access();
     if(client_queue->size() > 0) {
-      std::cout << "[" << thread  << "]Force: Signal queue has clients." << std::endl;
       queue_access->signal_not_empty();
     } else {
-      std::cout << "[" << thread  << "]Force: Signal queue no clients" << std::endl;
       queue_access->set_empty();
     }
     queue_access->unlock();
   }
-  std::cout << pthread_self() << " done with situation" << std::endl;
   thread = 0;
 }
 
@@ -50,7 +46,6 @@ bool Worker::is_active() {
 
 void Worker::delete_client_thread() {
   if(client_thread != NULL) {
-    std::cout << "Deleting client thread: " << thread << "\n\n";
     delete client_thread;
   }
   client_thread = NULL;

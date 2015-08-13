@@ -39,7 +39,6 @@ public:
   static void thread_cleanup (void* args) {
     LazyThreadPool* self = (LazyThreadPool* ) args;
     pthread_t id = pthread_self();
-    std::cout << id << ": Calling Thread cleanup!\n";
 
     self->deactivate_worker(id);
   }

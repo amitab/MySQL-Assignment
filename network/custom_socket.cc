@@ -7,7 +7,6 @@ CustomSocket::CustomSocket(): CustomSocketBase() {
 }
 
 CustomSocket::~CustomSocket() {
-  std::cout << "Destroying socket \n";
   delete[] buf_;
   shutdown();
 }
@@ -35,7 +34,6 @@ std::string CustomSocket::recv(int sockfd) {
     int nread = ::recv(sockfd,buf_,1024,0);
     if (nread < 0) {
       if (errno == EINTR) {
-        std::cerr << "ERROR Interrupted: " << strerror(errno) << std::endl;
         retry++;
         if(retry > 10) {
           throw errno;
@@ -44,11 +42,9 @@ std::string CustomSocket::recv(int sockfd) {
         }
       }
       else {
-        std::cerr << "Error on write: " << strerror(errno) << std::endl;
         throw errno;
       }
     } else if (nread == 0) {
-      std::cerr << "ERROR socket closed: " << strerror(errno) << std::endl;
       throw errno;
     }
     request.append(buf_,nread);
@@ -65,7 +61,6 @@ void CustomSocket::send(std::string response, int sockfd) {
   while (nleft) {
     if ((nwritten = ::send(sockfd, ptr, nleft, 0)) < 0) {
       if (errno == EINTR) {
-        std::cerr << "ERROR Interrupted: " << strerror(errno) << std::endl;
         retry++;
         if(retry > 10) {
           throw errno;
@@ -73,11 +68,9 @@ void CustomSocket::send(std::string response, int sockfd) {
           continue;
         }
       } else {
-        std::cerr << "Error on write: " << strerror(errno) << std::endl;
         throw errno;
       }
     } else if (nwritten == 0) {
-      std::cerr << "ERROR socket closed: " << strerror(errno) << std::endl;
       throw errno;
     }
     nleft -= nwritten;

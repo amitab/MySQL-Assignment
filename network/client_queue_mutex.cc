@@ -20,7 +20,6 @@ ClientQueueMutex::ClientQueueMutex() {
 void ClientQueueMutex::accquire_lock() {
   wait_count++;
   int ret_val = pthread_mutex_lock(&m_lock);
-  if(ret_val != 0) std::cerr << "Error accquire lock: " << strerror(ret_val) << std::endl;
   wait_count--;
 }
 
@@ -31,11 +30,9 @@ int ClientQueueMutex::try_to_lock_queue() {
 void ClientQueueMutex::lock_wait_for_access() {
   wait_count++;
   int ret_val = pthread_mutex_lock(&m_lock);
-  if(ret_val != 0) std::cerr << "Error lock before wait queue_access: " << strerror(ret_val) << std::endl;
 
   while(is_locked) {
     int ret_val = pthread_cond_wait(&queue_access, &m_lock);
-    if(ret_val != 0) std::cerr << "Error wait queue_access after lock: " << strerror(ret_val) << std::endl;
   }
   is_locked = true;
 
@@ -48,7 +45,6 @@ int ClientQueueMutex::wait_for_access() {
 
   while(is_locked) {
     ret_val = pthread_cond_wait(&queue_access, &m_lock);
-    if(ret_val != 0) std::cerr << "Error wait queue_access: " << strerror(ret_val) << std::endl;
   }
 
   is_locked = true;
@@ -73,24 +69,15 @@ void ClientQueueMutex::signal_not_empty() {
 void ClientQueueMutex::lock_access_queue_not_empty() {
   wait_count++;
   int ret_val = pthread_mutex_lock(&m_lock);
-  if(ret_val != 0) std::cerr << "Error accquire lock before queue_not_empty: " << strerror(ret_val) << std::endl;
 
-  std::cout << pthread_self() << ": Waiting for Queue not empty" << "\n";
   while(is_empty) {
     int ret_val = pthread_cond_wait(&queue_not_empty, &m_lock);
-    if(ret_val != 0) std::cerr << "Error wait for queue_not_empty after lock: " << strerror(ret_val) << std::endl;
   }
-
-  std::cout << pthread_self() << ": Queue not empty" << "\n";
-  std::cout << pthread_self() << ": Waiting for queue access" << "\n";
 
   while(is_locked) {
     int ret_val = pthread_cond_wait(&queue_access, &m_lock);
-    if(ret_val != 0) std::cerr << "Error wait for queue_access after queue_not_empty and lock: " << strerror(ret_val) << std::endl;
   }
-  std::cout << pthread_self() << ": GOT queue access" << "\n";
   is_locked = true;
-
   wait_count--;
 }
 
@@ -101,36 +88,28 @@ int ClientQueueMutex::timed_lock_access_queue_not_empty(int seconds) {
   to.tv_sec += seconds;
 
   int ret_val = pthread_mutex_timedlock(&m_lock, &to);
-  if(ret_val != 0) std::cerr << "Error accquire lock before queue_not_empty: " << strerror(ret_val) << std::endl;
   if (ret_val != 0) {
     pthread_mutex_unlock(&m_lock);
     wait_count--;
     return ret_val;
   }
-  std::cout << pthread_self() << ": Waiting for Queue not empty" << "\n";
 
   while (is_empty) {
     ret_val = pthread_cond_timedwait(&queue_not_empty, &m_lock, &to);
-    if(ret_val != 0) std::cerr << "Error wait for queue_not_empty after lock: " << strerror(ret_val) << std::endl;
     if (ret_val != 0) {
       wait_count--;
       return ret_val;
     }
   }
-
-  std::cout << pthread_self() << ": Queue not empty" << "\n";
-  std::cout << pthread_self() << ": Waiting for queue access" << "\n";
 
   while (is_locked) {
     ret_val = pthread_cond_timedwait(&queue_access, &m_lock, &to);
-    if(ret_val != 0) std::cerr << "Error wait for queue_access after queue_not_empty and lock: " << strerror(ret_val) << std::endl;
     if (ret_val != 0) {
       wait_count--;
       return ret_val;
     }
   }
 
-  std::cout << pthread_self() << ": GOT queue access" << "\n";
   is_locked = true;
   wait_count--;
   return 0;
@@ -138,7 +117,6 @@ int ClientQueueMutex::timed_lock_access_queue_not_empty(int seconds) {
 
 void ClientQueueMutex::unlock() {
   int err = pthread_mutex_unlock(&m_lock);
-  if(err != 0) std::cerr << "[" << pthread_self() << "] Error unlock: " << strerror(err) << std::endl;
 }
 
 ClientQueueMutex::~ClientQueueMutex() {
@@ -151,7 +129,6 @@ ClientQueueMutex::~ClientQueueMutex() {
 }
 
 void ClientQueueMutex::broadcast_conds() {
-  std::cout << "Broadcasting to all" << std::endl;
   is_empty = false;
   pthread_cond_broadcast(&queue_not_empty);
   is_locked = false;
