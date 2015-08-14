@@ -1,0 +1,115 @@
+==6103== Memcheck, a memory error detector
+==6103== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
+==6103== Using Valgrind-3.10.0.SVN and LibVEX; rerun with -h for copyright info
+==6103== Command: ./server 5001 127 10 10
+==6103== 
+--6103-- Valgrind options:
+--6103--    --leak-check=full
+--6103--    -v
+--6103-- Contents of /proc/version:
+--6103--   Linux version 3.16.0-45-generic (buildd@lgw01-23) (gcc version 4.8.2 (Ubuntu 4.8.2-19ubuntu1) ) #60~14.04.1-Ubuntu SMP Fri Jul 24 21:16:23 UTC 2015
+--6103-- Arch and hwcaps: AMD64, amd64-cx16-lzcnt-rdtscp-sse3-avx-avx2-bmi
+--6103-- Page sizes: currently 4096, max supported 4096
+--6103-- Valgrind library directory: /usr/lib/valgrind
+--6103-- Reading syms from /home/amitabh/Code/assignment/server
+--6103-- Reading syms from /lib/x86_64-linux-gnu/ld-2.19.so
+--6103--   Considering /lib/x86_64-linux-gnu/ld-2.19.so ..
+--6103--   .. CRC mismatch (computed 4cbae35e wanted 8d683c31)
+--6103--   Considering /usr/lib/debug/lib/x86_64-linux-gnu/ld-2.19.so ..
+--6103--   .. CRC is valid
+--6103-- Reading syms from /usr/lib/valgrind/memcheck-amd64-linux
+--6103--   Considering /usr/lib/valgrind/memcheck-amd64-linux ..
+--6103--   .. CRC mismatch (computed 37cdde19 wanted adc367dd)
+--6103--    object doesn't have a symbol table
+--6103--    object doesn't have a dynamic symbol table
+--6103-- Scheduler: using generic scheduler lock implementation.
+--6103-- Reading suppressions file: /usr/lib/valgrind/default.supp
+==6103== embedded gdbserver: reading from /tmp/vgdb-pipe-from-vgdb-to-6103-by-amitabh-on-???
+==6103== embedded gdbserver: writing to   /tmp/vgdb-pipe-to-vgdb-from-6103-by-amitabh-on-???
+==6103== embedded gdbserver: shared mem   /tmp/vgdb-pipe-shared-mem-vgdb-6103-by-amitabh-on-???
+==6103== 
+==6103== TO CONTROL THIS PROCESS USING vgdb (which you probably
+==6103== don't want to do, unless you know exactly what you're doing,
+==6103== or are doing some strange experiment):
+==6103==   /usr/lib/valgrind/../../bin/vgdb --pid=6103 ...command...
+==6103== 
+==6103== TO DEBUG THIS PROCESS USING GDB: start GDB like this
+==6103==   /path/to/gdb ./server
+==6103== and then give GDB the following command
+==6103==   target remote | /usr/lib/valgrind/../../bin/vgdb --pid=6103
+==6103== --pid is optional if only one valgrind process is running
+==6103== 
+--6103-- REDIR: 0x4019ca0 (strlen) redirected to 0x38068331 (???)
+--6103-- Reading syms from /usr/lib/valgrind/vgpreload_core-amd64-linux.so
+--6103--   Considering /usr/lib/valgrind/vgpreload_core-amd64-linux.so ..
+--6103--   .. CRC mismatch (computed 329d6860 wanted c0186920)
+--6103--    object doesn't have a symbol table
+--6103-- Reading syms from /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so
+--6103--   Considering /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so ..
+--6103--   .. CRC mismatch (computed 1fb85af8 wanted 2e9e3c16)
+--6103--    object doesn't have a symbol table
+==6103== WARNING: new redirection conflicts with existing -- ignoring it
+--6103--     old: 0x04019ca0 (strlen              ) R-> (0000.0) 0x38068331 ???
+--6103--     new: 0x04019ca0 (strlen              ) R-> (2007.0) 0x04c2e1a0 strlen
+--6103-- REDIR: 0x4019a50 (index) redirected to 0x4c2dd50 (index)
+--6103-- REDIR: 0x4019c70 (strcmp) redirected to 0x4c2f2f0 (strcmp)
+--6103-- REDIR: 0x401a9c0 (mempcpy) redirected to 0x4c31da0 (mempcpy)
+--6103-- Reading syms from /lib/x86_64-linux-gnu/libpthread-2.19.so
+--6103--   Considering /lib/x86_64-linux-gnu/libpthread-2.19.so ..
+--6103--   .. CRC mismatch (computed d568bf33 wanted fb00d679)
+--6103--   Considering /usr/lib/debug/lib/x86_64-linux-gnu/libpthread-2.19.so ..
+--6103--   .. CRC is valid
+--6103-- Reading syms from /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.19
+--6103--   Considering /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.19 ..
+--6103--   .. CRC mismatch (computed 0df13638 wanted 88e81a42)
+--6103--    object doesn't have a symbol table
+--6103-- Reading syms from /lib/x86_64-linux-gnu/libm-2.19.so
+--6103--   Considering /lib/x86_64-linux-gnu/libm-2.19.so ..
+--6103--   .. CRC mismatch (computed a46ef660 wanted 767bfa33)
+--6103--   Considering /usr/lib/debug/lib/x86_64-linux-gnu/libm-2.19.so ..
+--6103--   .. CRC is valid
+--6103-- Reading syms from /lib/x86_64-linux-gnu/libgcc_s.so.1
+--6103--   Considering /lib/x86_64-linux-gnu/libgcc_s.so.1 ..
+--6103--   .. CRC mismatch (computed ea519b66 wanted 0c00ddb3)
+--6103--    object doesn't have a symbol table
+--6103-- Reading syms from /lib/x86_64-linux-gnu/libc-2.19.so
+--6103--   Considering /lib/x86_64-linux-gnu/libc-2.19.so ..
+--6103--   .. CRC mismatch (computed dc620abc wanted 148cbd6e)
+--6103--   Considering /usr/lib/debug/lib/x86_64-linux-gnu/libc-2.19.so ..
+--6103--   .. CRC is valid
+--6103-- REDIR: 0x5901d60 (strcasecmp) redirected to 0x4a25720 (_vgnU_ifunc_wrapper)
+--6103-- REDIR: 0x5904050 (strncasecmp) redirected to 0x4a25720 (_vgnU_ifunc_wrapper)
+--6103-- REDIR: 0x5901530 (memcpy@GLIBC_2.2.5) redirected to 0x4a25720 (_vgnU_ifunc_wrapper)
+--6103-- REDIR: 0x58ff7c0 (rindex) redirected to 0x4c2da30 (rindex)
+--6103-- REDIR: 0x58fdac0 (strlen) redirected to 0x4c2e0e0 (strlen)
+--6103-- REDIR: 0x5900fa0 (__GI_memcmp) redirected to 0x4c30b80 (__GI_memcmp)
+--6103-- REDIR: 0x58fc070 (strcmp) redirected to 0x4a25720 (_vgnU_ifunc_wrapper)
+--6103-- REDIR: 0x59b5200 (__strcmp_ssse3) redirected to 0x4c2f1b0 (strcmp)
+--6103-- REDIR: 0x50b3d90 (operator new(unsigned long)) redirected to 0x4c2b070 (operator new(unsigned long))
+--6103-- REDIR: 0x50b3ea0 (operator new[](unsigned long)) redirected to 0x4c2b790 (operator new[](unsigned long))
+--6103-- REDIR: 0x50b20f0 (operator delete(void*)) redirected to 0x4c2c250 (operator delete(void*))
+--6103-- REDIR: 0x59c5090 (__memmove_ssse3_back) redirected to 0x4c2f450 (memcpy@GLIBC_2.2.5)
+--6103-- REDIR: 0xffffffffff600400 (???) redirected to 0x3806831d (???)
+--6103-- REDIR: 0x58f7df0 (free) redirected to 0x4c2bd80 (free)
+--6103-- REDIR: 0x58f7750 (malloc) redirected to 0x4c2ab10 (malloc)
+--6103-- REDIR: 0x5906780 (__GI_memcpy) redirected to 0x4c2fc90 (__GI_memcpy)
+--6103-- REDIR: 0x5900410 (__GI_strstr) redirected to 0x4c32030 (__strstr_sse2)
+--6103-- REDIR: 0x58fd540 (__GI_strcpy) redirected to 0x4c2e2a0 (__GI_strcpy)
+--6103-- REDIR: 0x58fc0b0 (__GI_strcmp) redirected to 0x4c2f200 (__GI_strcmp)
+--6103-- REDIR: 0x5906730 (memcpy@@GLIBC_2.14) redirected to 0x4a25720 (_vgnU_ifunc_wrapper)
+--6103-- REDIR: 0x590cfd0 (__memcpy_sse2_unaligned) redirected to 0x4c2f6b0 (memcpy@@GLIBC_2.14)
+--6103-- REDIR: 0x5900f60 (bcmp) redirected to 0x4a25720 (_vgnU_ifunc_wrapper)
+--6103-- REDIR: 0x59d5060 (__memcmp_sse4_1) redirected to 0x4c30c00 (__memcmp_sse4_1)
+
+--6103-- REDIR: 0x58f8220 (calloc) redirected to 0x4c2cbf0 (calloc)
+--6103-- REDIR: 0x50b2120 (operator delete[](void*)) redirected to 0x4c2c7d0 (operator delete[](void*))
+Force Shutting down server!
+==6103== 
+==6103== HEAP SUMMARY:
+==6103==     in use at exit: 0 bytes in 0 blocks
+==6103==   total heap usage: 2,379,059 allocs, 2,379,059 frees, 164,073,891 bytes allocated
+==6103== 
+==6103== All heap blocks were freed -- no leaks are possible
+==6103== 
+==6103== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==6103== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
