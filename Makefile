@@ -37,4 +37,4 @@ clean_parser:
 clean_bin:
 	rm -f server client
 
-clean: clean_network clean_db clean_parser clean_bin
+clean: clean_network speed_test clean_db clean_parser clean_bin

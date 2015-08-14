@@ -1,0 +1,107 @@
+--------------------------------------------------------------------------------
+Profile data file 'callgrind.out.1067' (creator: callgrind-3.10.0)
+--------------------------------------------------------------------------------
+I1 cache: 
+D1 cache: 
+LL cache: 
+Timerange: Basic block 0 - 410283649
+Trigger: Program termination
+Profiled target:  ./server 5001 127 10 10 (PID 1067, part 1)
+Events recorded:  Ir
+Events shown:     Ir
+Event sort order: Ir
+Thresholds:       99
+Include dirs:     
+User annotated:   
+Auto-annotation:  off
+
+--------------------------------------------------------------------------------
+           Ir 
+--------------------------------------------------------------------------------
+1,805,257,311  PROGRAM TOTALS
+
+--------------------------------------------------------------------------------
+         Ir  file:function
+--------------------------------------------------------------------------------
+222,551,289  ???:yylex(YYSTYPE*, void*) [/home/amitabh/Code/assignment/server]
+180,067,153  /build/buildd/glibc-2.19/malloc/malloc.c:_int_free [/lib/x86_64-linux-gnu/libc-2.19.so]
+172,130,926  /build/buildd/glibc-2.19/malloc/malloc.c:_int_malloc [/lib/x86_64-linux-gnu/libc-2.19.so]
+111,813,152  /build/buildd/glibc-2.19/malloc/malloc.c:malloc [/lib/x86_64-linux-gnu/libc-2.19.so]
+ 88,203,234  ???:__dynamic_cast [/usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.20]
+ 86,600,000  ???:yyparse(expression**, void*) [/home/amitabh/Code/assignment/server]
+ 59,030,950  ???:std::string::find(char const*, unsigned long, unsigned long) const [/usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.20]
+ 54,509,021  ???:yy_get_previous_state(void*) [/home/amitabh/Code/assignment/server]
+ 44,221,689  /build/buildd/glibc-2.19/malloc/malloc.c:free [/lib/x86_64-linux-gnu/libc-2.19.so]
+ 42,001,820  ???:__cxxabiv1::__si_class_type_info::__do_dyncast(long, __cxxabiv1::__class_type_info::__sub_kind, __cxxabiv1::__class_type_info const*, void const*, __cxxabiv1::__class_type_info const*, void const*, __cxxabiv1::__class_type_info::__dyncast_result&) const [/usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.20]
+ 40,200,942  ???:__cxxabiv1::__vmi_class_type_info::__do_dyncast(long, __cxxabiv1::__class_type_info::__sub_kind, __cxxabiv1::__class_type_info const*, void const*, __cxxabiv1::__class_type_info const*, void const*, __cxxabiv1::__class_type_info::__dyncast_result&) const [/usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.20]
+ 39,763,925  ???:AVLTree<int>::insert(int, AVLNode<int>*&, AVLNode<int>*)'2 [/home/amitabh/Code/assignment/server]
+ 39,078,648  /build/buildd/glibc-2.19/stdlib/../stdlib/strtol_l.c:____strtol_l_internal [/lib/x86_64-linux-gnu/libc-2.19.so]
+ 26,800,047  ???:0x00000000000c4620 [/usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.20]
+ 23,100,042  ???:std::string::_Rep::_S_create(unsigned long, unsigned long, std::allocator<char> const&) [/usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.20]
+ 23,100,040  ???:std::string::reserve(unsigned long) [/usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.20]
+ 20,327,748  /build/buildd/glibc-2.19/string/../sysdeps/x86_64/multiarch/memcpy-sse2-unaligned.S:__memcpy_sse2_unaligned [/lib/x86_64-linux-gnu/libc-2.19.so]
+ 20,000,032  ???:std::string::_Rep::_M_clone(std::allocator<char> const&, unsigned long) [/usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.20]
+ 19,247,165  ???:yy_scan_bytes(char const*, int, void*) [/home/amitabh/Code/assignment/server]
+ 18,948,592  ???:operator new(unsigned long) [/usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.20]
+ 16,437,324  ???:ClientParser::find_op(expression*) [/home/amitabh/Code/assignment/server]
+ 16,000,028  ???:handle_clients(ClientThread*) [/home/amitabh/Code/assignment/server]
+ 15,400,083  ???:CustomSocket::recv(int) [/home/amitabh/Code/assignment/server]
+ 14,400,360  /build/buildd/glibc-2.19/string/../sysdeps/x86_64/multiarch/../strcmp.S:__strcmp_ssse3 [/lib/x86_64-linux-gnu/libc-2.19.so]
+ 14,400,111  /build/buildd/glibc-2.19/string/../sysdeps/x86_64/multiarch/memcmp-sse4.S:__memcmp_sse4_1 [/lib/x86_64-linux-gnu/libc-2.19.so]
+ 13,977,026  /build/buildd/glibc-2.19/string/../sysdeps/x86_64/strlen.S:strlen [/lib/x86_64-linux-gnu/libc-2.19.so]
+ 12,602,600  ???:AVLTree<int>::insert(int, AVLNode<int>*&, AVLNode<int>*) [/home/amitabh/Code/assignment/server]
+ 11,000,000  ???:ClientParser::parse_and_eval(std::string) [/home/amitabh/Code/assignment/server]
+ 10,800,276  ???:std::basic_ios<char, std::char_traits<char> >::_M_cache_locale(std::locale const&) [/usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.20]
+ 10,800,000  ???:std::string::compare(char const*) const [/usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.20]
+ 10,366,934  ???:std::string::assign(std::string const&) [/usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.20]
+ 10,000,540  ???:std::locale::locale() [/usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.20]
+  9,800,004  ???:yylex_init(void**) [/home/amitabh/Code/assignment/server]
+  9,700,000  ???:std::ostreambuf_iterator<char, std::char_traits<char> > std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::_M_insert_int<long>(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, long) const [/usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.20]
+  9,600,024  ???:std::basic_string<char, std::char_traits<char>, std::allocator<char> >::basic_string(std::string const&) [/usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.20]
+  9,500,734  ???:std::locale::id::_M_id() const [/usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.20]
+  9,384,630  ???:std::basic_string<char, std::char_traits<char>, std::allocator<char> >::basic_string(char const*, std::allocator<char> const&) [/usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.20]
+  8,700,008  ???:std::basic_stringbuf<char, std::char_traits<char>, std::allocator<char> >::overflow(int) [/usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.20]
+  8,500,000  ???:std::basic_streambuf<char, std::char_traits<char> >::xsputn(char const*, long) [/usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.20]
+  8,200,000  ???:yy_scan_buffer(char*, unsigned long, void*) [/home/amitabh/Code/assignment/server]
+  8,100,305  ???:std::ios_base::_M_init() [/usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.20]
+  7,436,928  ???:0x000000000008bf50 [/usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.20]
+  7,200,176  ???:std::basic_ios<char, std::char_traits<char> >::init(std::basic_streambuf<char, std::char_traits<char> >*) [/usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.20]
+  7,000,000  ???:char* std::string::_S_construct<char*>(char*, char*, std::allocator<char> const&, std::forward_iterator_tag) [/usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.20]
+  6,900,165  ???:bool std::has_facet<std::ctype<char> >(std::locale const&) [/usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.20]
+  6,900,161  ???:bool std::has_facet<std::num_get<char, std::istreambuf_iterator<char, std::char_traits<char> > > >(std::locale const&) [/usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.20]
+  6,900,161  ???:bool std::has_facet<std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > > >(std::locale const&) [/usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.20]
+  6,833,124  ???:char* std::string::_S_construct<char const*>(char const*, char const*, std::allocator<char> const&, std::forward_iterator_tag) [/usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.20]
+  6,800,000  ???:yylex_destroy(void*) [/home/amitabh/Code/assignment/server]
+  6,800,000  ???:std::ostream& std::ostream::_M_insert<long>(long) [/usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.20]
+  6,600,041  ???:CustomSocket::send_message(std::string) [/home/amitabh/Code/assignment/server]
+  6,600,004  ???:std::basic_string<char, std::char_traits<char>, std::allocator<char> >::basic_string(std::string const&, unsigned long, unsigned long) [/usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.20]
+  6,400,040  ???:CustomSocket::send(std::string, int) [/home/amitabh/Code/assignment/server]
+  6,400,032  /build/buildd/glibc-2.19/nptl/../sysdeps/unix/sysv/linux/x86_64/recv.c:recv [/lib/x86_64-linux-gnu/libpthread-2.19.so]
+  6,400,032  /build/buildd/glibc-2.19/nptl/../sysdeps/unix/sysv/linux/x86_64/send.c:send [/lib/x86_64-linux-gnu/libpthread-2.19.so]
+  6,400,000  ???:yy_load_buffer_state(void*) [/home/amitabh/Code/assignment/server]
+  6,325,022  ???:SharedDS::confirm_data(int) [/home/amitabh/Code/assignment/server]
+  6,300,147  ???:std::ctype<char> const& std::use_facet<std::ctype<char> >(std::locale const&) [/usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.20]
+  6,300,147  ???:std::num_get<char, std::istreambuf_iterator<char, std::char_traits<char> > > const& std::use_facet<std::num_get<char, std::istreambuf_iterator<char, std::char_traits<char> > > >(std::locale const&) [/usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.20]
+  6,300,147  ???:std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > > const& std::use_facet<std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > > >(std::locale const&) [/usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.20]
+  6,000,540  ???:std::ios_base::ios_base() [/usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.20]
+  6,000,328  ???:0x0000000000072330 [/usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.20]
+  5,700,118  ???:std::basic_ostream<char, std::char_traits<char> >& std::__ostream_insert<char, std::char_traits<char> >(std::basic_ostream<char, std::char_traits<char> >&, char const*, long) [/usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.20]
+  5,400,000  ???:ClientParser::getCommandTree(char const*) [/home/amitabh/Code/assignment/server]
+  5,400,000  ???:yy_switch_to_buffer(yy_buffer_state*, void*) [/home/amitabh/Code/assignment/server]
+  5,378,631  ???:SharedDS::insert_data(int) [/home/amitabh/Code/assignment/server]
+  5,100,187  ???:std::locale::operator=(std::locale const&) [/usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.20]
+  5,000,130  ???:std::locale::~locale() [/usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.20]
+  4,889,433  ???:yy_scan_string(char const*, void*) [/home/amitabh/Code/assignment/server]
+  4,800,008  ???:std::string::append(char const*, unsigned long) [/usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.20]
+  4,600,092  ???:std::ostream::sentry::sentry(std::ostream&) [/usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.20]
+  4,400,004  ???:yy_delete_buffer(yy_buffer_state*, void*) [/home/amitabh/Code/assignment/server]
+  4,200,000  ???:yyensure_buffer_stack(void*) [/home/amitabh/Code/assignment/server]
+  3,901,366  /build/buildd/glibc-2.19/nptl/../nptl/pthread_mutex_lock.c:pthread_mutex_lock [/lib/x86_64-linux-gnu/libpthread-2.19.so]
+  3,900,000  ???:ClientParser::evaluate(expression*) [/home/amitabh/Code/assignment/server]
+  3,400,000  ???:ClientParser::insert_op(expression*) [/home/amitabh/Code/assignment/server]
+  3,301,098  /build/buildd/glibc-2.19/nptl/pthread_mutex_unlock.c:pthread_mutex_unlock [/lib/x86_64-linux-gnu/libpthread-2.19.so]
+  3,300,000  ???:std::basic_stringbuf<char, std::char_traits<char>, std::allocator<char> >::_M_sync(char*, unsigned long, unsigned long) [/usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.20]
+  3,158,102  ???:operator delete(void*) [/usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.20]
+  2,400,046  /build/buildd/glibc-2.19/nptl/../nptl/sysdeps/unix/sysv/linux/x86_64/cancellation.S:__pthread_enable_asynccancel [/lib/x86_64-linux-gnu/libpthread-2.19.so]
+  2,342,892  ???:AVLTree<int>::find(int, AVLNode<int>*)'2 [/home/amitabh/Code/assignment/server]
+
