@@ -4,6 +4,7 @@
 #include "avl_node.h"
 #include "mutex.cc"
 #include <limits>
+#include <sstream>
 
 template <class T>
 class AVLTree {
@@ -171,15 +172,17 @@ class AVLTree {
     }
   }
 
-   void display_tree(AVLNode<T>* node) {
-    if(node == NULL) return;
-    display_tree(node->left);
+  std::string display_tree(AVLNode<T>* node) {
+    std::stringstream disp;
+    if(node == NULL) return "";
+    disp << display_tree(node->left);
     //cout << node->data << ": h(" << node->height << ")" << ": b(" << node->balance() << "): p(" << (node->parent == NULL ? "No Parent" : node->parent->data) << ")" << ", ";
-    cout << node->data << ", ";
+    disp << node->data << ", ";
     //cout << (node->left == NULL ? "NULL" : node->left->data) << "|" << node->data  << "|" << (node->right == NULL ? "NULL" : node->right->data) << " :p(" << (node->parent == NULL ? "No Parent" : node->parent->data) << "), ";
     //cout << (node->left == NULL ? -1 : node->left->data) << "|" << node->data  << "|" << (node->right == NULL ? -1 : node->right->data) << " :p(" << (node->parent == NULL ? -1 : node->parent->data) << "): b(" << node->balance() << "), ";
 
-    display_tree(node->right);
+    disp << display_tree(node->right);
+    return disp.str();
   }
 
   string find(string data) {
@@ -220,11 +223,11 @@ class AVLTree {
     }
   }
 
-  void display_tree() {
+  std::string display_tree() {
     if (root == NULL) {
-      return;
+      return "";
     }
-    display_tree(root);
+    return display_tree(root);
   }
 
   void delete_node(T data) {

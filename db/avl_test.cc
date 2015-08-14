@@ -3,10 +3,10 @@
 int main(int argc, char *argv[])
 {
   AVLTree<int> tree;
-  for (int i = 0; i < 10000; ++i) {
+  for (int i = 0; i < 100; ++i) {
     tree.insert(i);
   }
-  tree.display_tree();
+  cout << tree.display_tree() << endl;
   return 0;
 }
 

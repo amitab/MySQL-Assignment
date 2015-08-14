@@ -38,7 +38,7 @@ class SharedDS {
   bool confirm_data(string data);
   
   std::string status();
-  void show();
+  std::string show();
 };
 
 #endif

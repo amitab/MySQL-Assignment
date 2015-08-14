@@ -65,10 +65,12 @@ class HashTable {
     return buckets[key]->confirm_data(data);
   }
 
-  void display() {
+  std::string display() {
+    std::string data = "";
     for (int i = 0; i < size; ++i) {
-      buckets[i]->display_tree();
+      data += buckets[i]->display_tree();
     }
+    return data;
   }
 
   void delete_all() {

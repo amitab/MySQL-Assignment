@@ -77,11 +77,14 @@ std::string SharedDS::status() {
   return status_str.str();
 }
 
-void SharedDS::show() {
-  string_ds.display();
-  float_ds.display();
-  int_ds.display();
-  cout << endl;
+std::string SharedDS::show() {
+  std::string data = "";
+
+  data += string_ds.display();
+  data += float_ds.display();
+  data += int_ds.display();
+  
+  return data;
 }
 
 /*

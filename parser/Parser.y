@@ -62,6 +62,7 @@ expr
     | TOKEN_FIND TOKEN_WS operand { $$ = new expression(eFIND, $3); }
     | TOKEN_SHOW TOKEN_WS TOKEN_STATUS { $$ = new expression(eSHOW, new expression(eSTATUS)); }
     | TOKEN_SHOW TOKEN_WS TOKEN_CLIENT_DETAILS { $$ = new expression(eSHOW, new expression(eCLIENTDETAILS)); }
+    | TOKEN_SHOW TOKEN_WS TOKEN_ALL { $$ = new expression(eSHOW, new expression(eALL));  }
     | TOKEN_DELETE TOKEN_WS TOKEN_ALL { $$ = new expression(eDELETE, new expression(eALL)); }
     ;
 %%

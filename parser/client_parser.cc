@@ -79,6 +79,9 @@ std::string ClientParser::show_op(expression* value) {
     case eCLIENTDETAILS:
       return server->get_clients_connected();
       break;
+    case eALL:
+      return shared_ds->show();
+      break;
   }
 }
 
