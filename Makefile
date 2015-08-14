@@ -35,6 +35,6 @@ clean_parser:
 	cd parser && $(MAKE) clean
 
 clean_bin:
-	rm -f server client
+	rm -f server client speed_test
 
-clean: clean_network speed_test clean_db clean_parser clean_bin
+clean: clean_network clean_db clean_parser clean_bin
