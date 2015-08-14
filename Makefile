@@ -3,7 +3,7 @@ NETWORK_CLIENT = network/client.o network/custom_socket_base.o network/custom_so
 DB = db/avl_node.h db/avl_tree.h db/hash_table.h db/shared_ds.o
 PARSER = parser/client_parser.o parser/Expression.o parser/Lexer.cc parser/Parser.cc
 CC = g++
-CFLAGS = -g -lpthread -lreadline
+CFLAGS = -O -lpthread -lreadline
 
 all: server client
 

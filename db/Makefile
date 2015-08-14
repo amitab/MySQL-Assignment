@@ -1,7 +1,7 @@
 all: sharedds.o
 
 sharedds.o:
-	g++ -c shared_ds.cc -g
+	g++ -c shared_ds.cc -O
 
 avltest: avl_node.h avl_tree.h avl_test.cc
 	g++ -g avl_node.h avl_tree.h avl_test.cc -o avltest.o -lpthread

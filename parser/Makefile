@@ -1,4 +1,4 @@
-CFLAGS = -g
+CFLAGS = -O
 
 all: server db parser lexer expression client_parser
 
