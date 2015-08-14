@@ -1,4 +1,5 @@
 CFLAGS = -O
+CC = g++
 
 all: server db parser lexer expression client_parser
 
@@ -15,10 +16,10 @@ lexer:
 	lex Lexer.l
 
 expression: lexer parser
-	g++ -c Expression.cc $(CFLAGS)
+	$(CC) -c Expression.cc $(CFLAGS)
 
 client_parser: lexer parser expression server db
-	g++ -c client_parser.cc $(CFLAGS)
+	$(CC) -c client_parser.cc $(CFLAGS)
 
 clean:
 	rm -f Lexer.cc Lexer.h Parser.cc Parser.h *.o

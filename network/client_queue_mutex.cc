@@ -12,6 +12,7 @@ ClientQueueMutex::ClientQueueMutex() {
 
   pthread_mutexattr_init(&m_attr);
   pthread_mutexattr_settype(&m_attr, PTHREAD_MUTEX_ERRORCHECK);
+  pthread_mutexattr_setrobust(&m_attr, PTHREAD_MUTEX_ROBUST);
 
   pthread_mutex_init(&m_lock, &m_attr);
   wait_count = 0;
@@ -33,6 +34,7 @@ void ClientQueueMutex::lock_wait_for_access() {
 
   while(is_locked) {
     int ret_val = pthread_cond_wait(&queue_access, &m_lock);
+    std::cerr << "Error lock_wait_for_access: " << strerror(errno)  << std::endl;
   }
   is_locked = true;
 

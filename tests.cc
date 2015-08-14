@@ -12,9 +12,9 @@ int main(int argc, char** argv) {
   long duration;
 
   int portno;
-
-  if (argc < 3) {
-    std::cout << "Usage: " << argv[0] << " [host] [port]" << std::endl;
+  int test_count = atoi(argv[3]);
+  if (argc != 4) {
+    std::cout << "Usage: " << argv[0] << " [host] [port] [count]" << std::endl;
     exit(0);
   }
   portno = atoi(argv[2]);
@@ -29,7 +29,7 @@ int main(int argc, char** argv) {
   int dice_roll;  // generates number in the range 1..6 
 
   t1 = high_resolution_clock::now();
-  for (int i = 0; i < 100000; ++i) {
+  for (int i = 0; i < test_count; ++i) {
     dice_roll = distribution(generator);
     query << "INSERT " << dice_roll;
     client.send_message(query.str());
@@ -39,11 +39,11 @@ int main(int argc, char** argv) {
   }
   t2 = high_resolution_clock::now();
   duration = std::chrono::duration_cast<std::chrono::microseconds>( t2 - t1 ).count();
-  cout << "100000 insert time: " << duration << endl;
+  cout << test_count << " insert time: " << duration << endl;
 
 
   t1 = high_resolution_clock::now();
-  for (int i = 0; i < 100000; ++i) {
+  for (int i = 0; i < test_count; ++i) {
     dice_roll = distribution(generator);
     query << "FIND " << dice_roll;
     client.send_message(query.str());
@@ -53,7 +53,7 @@ int main(int argc, char** argv) {
   }
   t2 = high_resolution_clock::now();
   duration = std::chrono::duration_cast<std::chrono::microseconds>( t2 - t1 ).count();
-  cout << "100000 search time: " << duration << endl;
+  cout << test_count << " search time: " << duration << endl;
 
   return 0;
 }
