@@ -1,4 +1,4 @@
-CFLAGS = -O
+CFLAGS = -O2
 CC = g++
 
 all: server db parser lexer expression client_parser

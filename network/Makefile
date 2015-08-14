@@ -1,5 +1,5 @@
 CC = g++
-CFLAGS = -O -lpthread -lreadline
+CFLAGS = -O2 -lpthread -lreadline
 
 all: worker.o client_thread.o client_queue_mutex.o custom_socket_base.o client.o server.o lazy_thread_pool.o custom_socket.o
 

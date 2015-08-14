@@ -3,12 +3,15 @@ NETWORK_CLIENT = network/client.o network/custom_socket_base.o network/custom_so
 DB = db/avl_node.h db/avl_tree.h db/hash_table.h db/shared_ds.o
 PARSER = parser/client_parser.o parser/Expression.o parser/Lexer.cc parser/Parser.cc
 CC = g++
-CFLAGS = -O -lpthread -lreadline
+CFLAGS = -O2 -lpthread -lreadline
 
 all: server client
 
-test: server client
+speedtest: server client
 	$(CC) -std=c++11 $(NETWORK_CLIENT) tests.cc -o speed_test $(CFLAGS)
+
+test: server client
+	$(CC) -std=c++11 $(NETWORK_CLIENT) test_case.cc -o test_case $(CFLAGS)
 
 parser_files:
 	(cd parser; make all)
