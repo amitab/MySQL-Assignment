@@ -203,9 +203,20 @@ class AVLTree {
     else return result->data;
   }
 
+  bool check_balance(AVLNode<T>* node) {
+    if(node == NULL) return true;
+    if(node->balance() >= 2 || node->balance() <= -2) return false;
+    check_balance(node->left);
+    check_balance(node->right);
+  }
+
   public:
   AVLTree() {
     root = NULL;
+  }
+
+  bool check_balance() {
+    return check_balance(root);
   }
 
   bool insert(T data) {
