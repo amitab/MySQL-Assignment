@@ -1,13 +1,14 @@
 #include "worker.h"
 
 void Worker::the_situation() {
-  queue_access->signal_access();
-  if(client_queue->size() > 0) {
-    queue_access->signal_not_empty();
-  } else {
-    queue_access->set_empty();
+  if(queue_access->has_lock()) {
+    if(client_queue->size() > 0) {
+      queue_access->signal_q_not_empty();
+    } else {
+      queue_access->signal_q_empty();
+    }
+    queue_access->unlock();
   }
-  queue_access->unlock();
   
   thread = 0;
   active = false;

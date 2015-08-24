@@ -15,11 +15,21 @@ class ClientQueueMutex {
   volatile bool is_locked;
   volatile bool is_empty;
 
+  volatile bool q_empty;
+  pthread_cond_t q_empty_cond;
+  pthread_cond_t q_not_empty_cond;
+  pthread_t curr_thread;
+
   pthread_mutex_t m_lock;
   pthread_mutexattr_t m_attr;
   int wait_count;
 
 public:
+
+  bool has_lock() {
+    if(pthread_self() == curr_thread) return true;
+    return false;
+  }
 
   int get_waiting_thread_count();
 
@@ -29,25 +39,23 @@ public:
 
   int try_to_lock_queue();
 
-  void lock_wait_for_access();
-
-  int wait_for_access();
-
-  void signal_access();
-
-  void set_empty();
-
-  void signal_not_empty();
-
-  void lock_access_queue_not_empty();
-
-  int timed_lock_access_queue_not_empty(int seconds);
-
   void unlock();
 
   ~ClientQueueMutex();
 
   void broadcast_conds();
+
+  void signal_q_empty();
+
+  void signal_q_not_empty();
+
+  int worker_lock();
+
+  int timed_worker_lock(int seconds);
+
+  int manager_lock();
+
+  void broadcast_workers();
 };
 
 #endif

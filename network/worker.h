@@ -40,16 +40,19 @@ class Worker {
     pthread_setcanceltype(PTHREAD_CANCEL_ASYNCHRONOUS, NULL);
     pthread_t id = pthread_self();
     Worker* self;
-
+    std::cout << "Thread born: " << id << std::endl;
     try {
       self = (Worker*) args;
       pthread_cleanup_push(self->thread_cleanup_routine, self->thread_cleanup_args);
 
       while(true) {
         if(self->persist) {
-          self->queue_access->lock_access_queue_not_empty();
+          if(self->queue_access->worker_lock() != 0) {
+            std::cout << pthread_self() << " Couldnt get lock! Trying again" << std::endl;
+            continue;
+          }
         } else {
-          if(self->queue_access->timed_lock_access_queue_not_empty(self->idle_time) != 0) {
+          if(self->queue_access->timed_worker_lock(self->idle_time) != 0) {
             std::cout << "Thread Didnt get lock on time: " << self->thread << "\n\n";
             self->queue_access->unlock();
             break;
@@ -64,11 +67,10 @@ class Worker {
           self->client_thread = NULL;
         }
 
-        self->queue_access->signal_access();
         if(self->client_queue->size() > 0) {
-          self->queue_access->signal_not_empty();
+          self->queue_access->signal_q_not_empty();
         } else {
-          self->queue_access->set_empty();
+          self->queue_access->signal_q_empty();
         }
 
         self->queue_access->unlock();
