@@ -1,5 +1,10 @@
 #include "client_queue_mutex.h"
 
+bool ClientQueueMutex::has_lock()  {
+  if(pthread_self() == curr_thread) return true;
+  return false;
+}
+
 int ClientQueueMutex::get_waiting_thread_count() {
   return wait_count;
 }
@@ -42,13 +47,6 @@ ClientQueueMutex::~ClientQueueMutex() {
   pthread_cond_destroy(&queue_access);
 }
 
-void ClientQueueMutex::broadcast_conds() {
-  is_empty = false;
-  pthread_cond_broadcast(&queue_not_empty);
-  is_locked = false;
-  pthread_cond_broadcast(&queue_access);
-}
-
 void ClientQueueMutex::signal_q_empty() {
   q_empty = true;
   pthread_cond_signal(&q_empty_cond);
@@ -83,7 +81,7 @@ int ClientQueueMutex::timed_worker_lock(int seconds) {
   struct timespec to = {0};
   clock_gettime(CLOCK_REALTIME, &to);
   to.tv_sec += seconds;
-  
+
   int cond_val = 0;
   int ret_val = pthread_mutex_timedlock(&m_lock, &to);
   std::cout << pthread_self() << " lock value: " << strerror(ret_val) << std::endl;

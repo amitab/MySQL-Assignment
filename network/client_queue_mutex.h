@@ -26,10 +26,7 @@ class ClientQueueMutex {
 
 public:
 
-  bool has_lock() {
-    if(pthread_self() == curr_thread) return true;
-    return false;
-  }
+  bool has_lock();
 
   int get_waiting_thread_count();
 
@@ -42,8 +39,6 @@ public:
   void unlock();
 
   ~ClientQueueMutex();
-
-  void broadcast_conds();
 
   void signal_q_empty();
 
