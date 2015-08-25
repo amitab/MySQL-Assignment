@@ -60,14 +60,10 @@ void ClientQueueMutex::signal_q_not_empty() {
 int ClientQueueMutex::worker_lock() {
   wait_count++;
   int cond_val = 0;
-  std::cout << pthread_self() << " trying to get lock." << std::endl;
   int ret_val = pthread_mutex_lock(&m_lock);
-  std::cout << pthread_self() << " lock value: " << strerror(ret_val) << std::endl;
 
   while(q_empty && ret_val == 0) {
-    std::cout << pthread_self() << " queue is empty and lock is well" << std::endl;
     cond_val = pthread_cond_wait(&q_not_empty_cond, &m_lock);
-    std::cout << pthread_self() << " cond_val status " << strerror(cond_val) << std::endl;
   }
 
   wait_count--;
@@ -84,12 +80,9 @@ int ClientQueueMutex::timed_worker_lock(int seconds) {
 
   int cond_val = 0;
   int ret_val = pthread_mutex_timedlock(&m_lock, &to);
-  std::cout << pthread_self() << " lock value: " << strerror(ret_val) << std::endl;
 
   while(q_empty && ret_val == 0) {
-    std::cout << pthread_self() << " queue is empty and lock is well" << std::endl;
     cond_val = pthread_cond_timedwait(&q_not_empty_cond, &m_lock, &to);
-    std::cout << pthread_self() << " cond_val status " << strerror(cond_val) << std::endl;
     if(cond_val == ETIMEDOUT) break;
   }
 

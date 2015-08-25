@@ -73,18 +73,13 @@ bool LazyThreadPool::add_task(ClientThread* client_thread) {
     delete client_thread;
     return false;
   }
-  std::cout << "MANAGER GETTING LOCK" << std::endl;
   client_queue_mutex.accquire_lock();
-  std::cout << "MANAGER GOT LOCK" << std::endl;
   client_queue.push(client_thread);
   
   worker_start_working();
   client_thread->send_message("Welcome!");
-  std::cout << "MANAGER SIGNALING NOT EMPTY" << std::endl;
   client_queue_mutex.signal_q_not_empty();
-  std::cout << "MANAGER UNLOCKING" << std::endl;
   client_queue_mutex.unlock();
-  std::cout << "MANAGER RELEASED LOCK" << std::endl;
 
   return true;
 }
