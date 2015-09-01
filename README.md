@@ -18,3 +18,12 @@ To create n random insert and find tests,
 3.  run: ./speed_test [host] [port] [number of inserts and finds] 
     example: ./speed_test 127.0.0.1 5001 10000
     would run a speed test for 10000 inserts and 10000 finds
+
+Client Application has the following commands available:
+1. INSERT|DELETE|FIND [int]|[float]|[string]
+2. SHOW ALL|STATUS|CLIENT DETAILS
+
+example:
+INSERT 21
+FIND "sdsd"
+DELETE 53.33
